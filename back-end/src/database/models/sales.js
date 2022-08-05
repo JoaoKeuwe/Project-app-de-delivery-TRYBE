@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  SalesProducts.init({
+  Sales.init({
     userId: DataTypes.INTEGER,
     sellerId: DataTypes.INTEGER,
     totalPrice: DataTypes.DECIMAL,
     deliveryAddress: DataTypes.STRING,
     deliveryNumber: DataTypes.STRING,
-    saleDate: DataTypes.DATETIME,
+    saleDate: DataTypes.DATE,
   }, {
     sequelize,
     underscored: true,
