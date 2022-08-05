@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 const mid = require('../middlewares/errors');
-const { login } = require('../controllers/user.controller');
+const { register } = require('../controllers/user.controller');
 
 router
-  .post('/', mid.login, login);
+  .post('/', mid.register, register);
 
 module.exports = router;
