@@ -26,7 +26,15 @@ const createToken = async ({ email, password }) => {
   return token;
 };
 
+const register = async ({ name, role = '', email, password }) => {
+  if (name.length < 12) throw new Error('name min 12 char.');
+
+  const newUser = await User.create({ name, role, email, password: md5(password) });
+  return newUser; 
+};
+
 module.exports = {
   userValid,
   createToken,
+  register,
 };
