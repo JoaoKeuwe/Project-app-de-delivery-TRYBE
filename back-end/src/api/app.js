@@ -7,8 +7,8 @@ const app = express();
 
 app.use(cors());
 
-app.get('/coffee', (_req, res) => res.status(418).end());
 app.use(express.json());
+app.get('/coffee', (_req, res) => res.status(418).end());
 routes(app);
 
 module.exports = app;

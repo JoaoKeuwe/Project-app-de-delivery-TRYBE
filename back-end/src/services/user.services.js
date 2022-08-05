@@ -3,15 +3,13 @@ const fs = require('fs');
 const md5 = require('md5');
 const { User } = require('../database/models');
 
-const userValid = async ({ email, password }) => {
-  const emailRegex = /\S+@\S+\.\S+/;
-  if (!emailRegex.test(email)) throw new Error('Invalid Email');
-  if (password.length < 6) throw new Error('Invalid Passord');
-
+const login = async ({ email, password }) => {
   const user = await User.findOne({
     where: { email, password: md5(password) },
     attributes: { exclude: ['password'] },
   });
+
+  if (!user) throw new Error('email or password not found');
 
   return user;
 };
@@ -26,7 +24,19 @@ const createToken = async ({ email, password }) => {
   return token;
 };
 
+const register = async ({ name, role = '', email, password }) => {
+  const userEmail = await User.findOne({ where: { email } });
+  if (userEmail) throw new Error('email exists');
+
+  const userName = await User.findOne({ where: { name } });
+  if (userName) throw new Error('name exists');
+
+  const newUser = await User.create({ name, role, email, password: md5(password) });
+  return newUser; 
+};
+
 module.exports = {
-  userValid,
+  login,
   createToken,
+  register,
 };
