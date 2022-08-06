@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { requestLogin } from '../utils/requests';
 
 function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginFailed, setLoginFailed] = useState(false);
   const [isDisable, setDisable] = useState(true);
   const PASSWORD_MIN_LENGTH = 6;
   const NAME_MIN_LENGTH = 12;
@@ -17,6 +19,20 @@ function Register() {
       setDisable(false);
     } else {
       setDisable(true);
+    }
+  };
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+    try {
+      const register = await requestLogin('/register', { name, email, password });
+      console.log(register);
+      setLoginFailed(false);
+
+      window.location.href = '/customer/products';
+    } catch (error) {
+      console.log(error);
+      setLoginFailed(true);
     }
   };
 
@@ -65,19 +81,20 @@ function Register() {
             />
           </label>
 
+          { loginFailed ? (
+            <p data-testid="common_register__element-invalid_register">
+              email ou senha incorretos, tente novamente
+            </p>
+          ) : null }
+
           <button
             type="button"
             data-testid="common_register__button-register"
             disable={ isDisable }
+            onClick={ (e) => handleClick(e) }
           >
             Cadastrar
           </button>
-          <h6
-            data-testid="common_register__element-invalid_register"
-          >
-            a mensagem de erro vai aqui
-
-          </h6>
         </form>
       </div>
     </div>
