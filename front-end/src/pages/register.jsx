@@ -36,7 +36,7 @@ function Register() {
             Nome
             <input
               type="text"
-              data-testid="6"
+              data-testid="common_register__input-name"
               className="input-name"
               placeholder="Seu nome"
               onChange={ (e) => setName(e.target.value) }
@@ -47,7 +47,7 @@ function Register() {
             Email
             <input
               type="text"
-              data-testid="7"
+              data-testid="common_register__input-email"
               className="input-email"
               placeholder="Digite seu email"
               onChange={ (e) => setEmail(e.target.value) }
@@ -58,7 +58,7 @@ function Register() {
             Senha
             <input
               type="password"
-              data-testid="8"
+              data-testid="common_register__input-password"
               className="input-password"
               placeholder="Digite sua senha"
               onChange={ (e) => setPassword(e.target.value) }
@@ -67,12 +67,17 @@ function Register() {
 
           <button
             type="button"
-            data-testid="9"
+            data-testid="common_register__button-register"
             disable={ isDisable }
           >
             Cadastrar
           </button>
-          <h6 data-testid="10">a mensagem de erro vai aqui</h6>
+          <h6
+            data-testid="common_register__element-invalid_register"
+          >
+            a mensagem de erro vai aqui
+
+          </h6>
         </form>
       </div>
     </div>
