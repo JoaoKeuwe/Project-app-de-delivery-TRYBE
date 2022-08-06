@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { requestLogin, setToken } from '../utils/requests';
 
 function Login() {
@@ -77,9 +78,14 @@ function Login() {
       >
         LOGIN
       </button>
-      <button type="submit" data-testid="common_login__button-register">
-        REGISTER
-      </button>
+      <Link to="/register">
+        <button
+          type="submit"
+          data-testid="common_login__button-register"
+        >
+          REGISTER
+        </button>
+      </Link>
     </section>
   );
 }

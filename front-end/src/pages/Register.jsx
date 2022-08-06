@@ -5,8 +5,8 @@ function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginFailed, setLoginFailed] = useState(false);
-  const [isDisable, setDisable] = useState(true);
+  const [invalidProperties, setInvalidProperties] = useState(false);
+  const [isDisable, setDisable] = useState(false);
   const PASSWORD_MIN_LENGTH = 6;
   const NAME_MIN_LENGTH = 12;
   const emailRegex = /\S+@\S+\.\S+/;
@@ -26,13 +26,14 @@ function Register() {
     event.preventDefault();
     try {
       const register = await requestLogin('/register', { name, email, password });
-      console.log(register);
-      setLoginFailed(false);
+
+      localStorage.setItem('user', JSON.stringify(register));
+      setInvalidProperties(false);
 
       window.location.href = '/customer/products';
     } catch (error) {
       console.log(error);
-      setLoginFailed(true);
+      setInvalidProperties(true);
     }
   };
 
@@ -81,16 +82,16 @@ function Register() {
             />
           </label>
 
-          { loginFailed ? (
+          { invalidProperties ? (
             <p data-testid="common_register__element-invalid_register">
-              email ou senha incorretos, tente novamente
+              revise dados e tente novamente
             </p>
           ) : null }
 
           <button
             type="button"
             data-testid="common_register__button-register"
-            disable={ isDisable }
+            disabled={ isDisable }
             onClick={ (e) => handleClick(e) }
           >
             Cadastrar

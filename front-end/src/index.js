@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom';
 // import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import Register from './pages/register';
 import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Register />
   </React.StrictMode>,
   document.getElementById('root'),
 );
