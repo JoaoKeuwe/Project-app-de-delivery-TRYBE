@@ -24,7 +24,7 @@ const createToken = async ({ email, password }) => {
   return token;
 };
 
-const register = async ({ name, role = '', email, password }) => {
+const register = async ({ name, role = 'customer', email, password }) => {
   const userEmail = await User.findOne({ where: { email } });
   if (userEmail) throw new Error('email exists');
 
