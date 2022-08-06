@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Register() {
   const [name, setName] = useState('');
@@ -72,7 +72,7 @@ function Register() {
           >
             Cadastrar
           </button>
-
+          <h6 data-testid="10">a mensagem de erro vai aqui</h6>
         </form>
       </div>
     </div>
