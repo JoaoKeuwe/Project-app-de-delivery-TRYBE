@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { requestLogin, setToken } from '../utils/requests';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisable, setDisable] = useState(true);
+  const [loginFailed, setLoginFailed] = useState(false);
   const PASSWORD_MIN_LENGTH = 6;
   const emailRegex = /\S+@\S+\.\S+/;
   const emailValidate = emailRegex.test(email);
@@ -14,6 +16,22 @@ function Login() {
       setDisable(false);
     } else {
       setDisable(true);
+    }
+  };
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+    try {
+      const { token } = await requestLogin('/login', { email, password });
+      setToken(token);
+
+      localStorage.setItem('token', token);
+
+      setLoginFailed(false);
+
+      window.location.href = '/customer/products';
+    } catch (error) {
+      setLoginFailed(true);
     }
   };
 
@@ -28,7 +46,7 @@ function Login() {
         Login
         <input
           id="login"
-          data-testid="1"
+          data-testid="common_login__input-email"
           type="text"
           placeholder="Email..."
           name="Name"
@@ -39,16 +57,29 @@ function Login() {
         Senha
         <input
           id="password"
-          data-testid="2"
+          data-testid="common_login__input-password"
           type="password"
           placeholder="Senha"
           name="password"
           onChange={ (e) => setPassword(e.target.value) }
         />
       </label>
-      <button type="submit" data-testid="3" disabled={ isDisable }> LOGIN </button>
-      <button type="submit" data-testid="4"> REGISTER </button>
-      <h6 data-testid="5">sla oq é isso</h6>
+      { loginFailed ? (
+        <p data-testid="common_login__element-invalid-email">
+          email ou senha incorretos, tente novamente
+        </p>
+      ) : null }
+      <button
+        type="submit"
+        data-testid="common_login__button-login"
+        disabled={ isDisable }
+        onClick={ (event) => handleClick(event) }
+      >
+        LOGIN
+      </button>
+      <button type="submit" data-testid="common_login__button-register">
+        REGISTER
+      </button>
     </section>
   );
 }
