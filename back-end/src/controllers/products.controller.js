@@ -7,8 +7,8 @@ const getProducts = async (req, res) => {
   } catch (error) {
     return res.status(404).json({ message: error.message });
   }
-}
+};
 
 module.exports = {
   getProducts,
-}
+};
