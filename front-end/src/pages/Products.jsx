@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Card from '../components/card';
 import { requestProducts } from '../utils/requests';
 
 function Products() {
@@ -6,14 +7,23 @@ function Products() {
 //   const [password, setPassword] = useState('');
 //   const [isDisable, setDisable] = useState(true);
 //   const [loginFailed, setLoginFailed] = useState(false);
+  const [products, setProducts] = useState();
 
   useEffect(() => {
-    requestProducts('/products').then((data) => console.log(data));
+    requestProducts('/products').then((data) => setProducts(data));
   }, []);
 
   return (
     <div>
-      Ola
+      {products && products.map((product, index) => (
+        <Card
+          key={ index }
+          name={ product.name }
+          image={ product.image }
+          price={ product.price }
+        />
+      ))}
+
     </div>
   );
 }

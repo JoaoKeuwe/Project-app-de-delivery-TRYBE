@@ -6,6 +6,6 @@ const mid = require('../middlewares/errors');
 const { getProducts } = require('../controllers/products.controller');
 
 router
-  .get('/', mid.tokenAuthenticador, getProducts);
+  .get('/', getProducts);
 
 module.exports = router;
