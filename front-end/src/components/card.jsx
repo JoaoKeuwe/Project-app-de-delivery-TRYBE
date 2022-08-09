@@ -6,22 +6,47 @@ function Card(props) {
     price,
     image,
     name,
-    quantity,
+    // quantity,
   } = props;
   return (
     <div>
-      <h1>{price}</h1>
-      <img src={ image } alt="imagem" />
-      <p>{name}</p>
+      <h1
+        data-testid="customer_products__element-card-price-<id>"
+
+      >
+        {price}
+
+      </h1>
+
+      <img
+        src={ image }
+        alt="imagem"
+        data-testid="customer_products__img-card-bg-image-<id>"
+      />
+
+      <p
+        data-testid="customer_products__element-card-title-<id>"
+      >
+        {name}
+
+      </p>
+
       <button
         type="button"
+        data-testid="customer_products__button-card-rm-item-<id>"
       >
         -
 
       </button>
-      <i>{quantity}</i>
+      <i
+        data-testid="customer_products__input-card-quantity-<id>"
+      >
+        10
+
+      </i>
       <button
         type="button"
+        data-testid="customer_products__button-card-add-item-<id>"
       >
         +
 
@@ -34,6 +59,6 @@ export default Card;
 Card.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
-  quantity: PropTypes.number.isRequired,
+  // quantity: PropTypes.number.isRequired,
   name: PropTypes.number.isRequired,
 };

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../components/card';
 import { requestProducts } from '../utils/requests';
+import NavBar from '../components/navBar';
 
 function Products() {
 //   const [email, setEmail] = useState('');
@@ -9,12 +10,19 @@ function Products() {
 //   const [loginFailed, setLoginFailed] = useState(false);
   const [products, setProducts] = useState();
 
+  const fetchProducts = async () => {
+    const productsData = await requestProducts('/products');
+    setProducts(productsData);
+    console.log(productsData);
+  };
+
   useEffect(() => {
-    requestProducts('/products').then((data) => setProducts(data));
+    fetchProducts();
   }, []);
 
   return (
     <div>
+      <NavBar />
       {products && products.map((product, index) => (
         <Card
           key={ index }
