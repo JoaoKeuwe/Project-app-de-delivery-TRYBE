@@ -37,7 +37,7 @@ function NavBar() {
       </h3>
       <button
         type="submit"
-        data-testid="1customer_products__element-navbar-link-logout"
+        data-testid="customer_products__element-navbar-link-logout"
       >
         Sair
       </button>

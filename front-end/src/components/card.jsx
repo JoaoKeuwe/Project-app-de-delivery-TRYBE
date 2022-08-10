@@ -39,12 +39,10 @@ function Card(props) {
         -
 
       </button>
-      <i
+      <input
+        type="number"
         data-testid={ `customer_products__input-card-quantity-${id}` }
-      >
-        10
-
-      </i>
+      />
       <button
         type="button"
         data-testid={ `customer_products__button-card-add-item-${id}` }
