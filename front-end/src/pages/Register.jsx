@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import MyContext from '../context/Context';
 import { requestLogin } from '../utils/requests';
 
 function Register() {
-  const [name, setName] = useState('');
+  // const [name, setName] = useState('');
+  const { setUser, name, setName } = useContext(MyContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [invalidProperties, setInvalidProperties] = useState(false);
   const [isDisable, setDisable] = useState(false);
   const PASSWORD_MIN_LENGTH = 6;
-  const NAME_MIN_LENGTH = 12;
+  const NAME_MIN_LENGTH = 6;
   const emailRegex = /\S+@\S+\.\S+/;
   const emailValidate = emailRegex.test(email);
   const validateName = name.length >= NAME_MIN_LENGTH;
   const passwordValidate = password.length >= PASSWORD_MIN_LENGTH;
+  console.log(name);
 
   const disabled = () => {
     if (emailValidate && passwordValidate && validateName) {
@@ -26,7 +29,7 @@ function Register() {
     event.preventDefault();
     try {
       const register = await requestLogin('/register', { name, email, password });
-
+      setUser(register);
       localStorage.setItem('user', JSON.stringify(register));
       setInvalidProperties(false);
 
