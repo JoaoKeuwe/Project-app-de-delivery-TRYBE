@@ -26,7 +26,7 @@ function Products() {
       {products && products.map((product, index) => (
         <Card
           key={ product.name }
-          id={ index + 1 }
+          id={ index }
           name={ product.name }
           image={ product.image }
           price={ product.price }
