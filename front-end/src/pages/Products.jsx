@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Card from '../components/card';
 import { requestProducts } from '../utils/requests';
 import NavBar from '../components/navBar';
+import MyContext from '../context/Context';
 
 function Products() {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [isDisable, setDisable] = useState(true);
-//   const [loginFailed, setLoginFailed] = useState(false);
   const [products, setProducts] = useState();
-
+  const { user } = useContext(MyContext);
+  console.log(user);
   const fetchProducts = async () => {
     const productsData = await requestProducts('/products');
     setProducts(productsData);
@@ -26,7 +24,7 @@ function Products() {
       {products && products.map((product, index) => (
         <Card
           key={ product.name }
-          id={ index }
+          id={ index + 1 }
           name={ product.name }
           image={ product.image }
           price={ product.price }

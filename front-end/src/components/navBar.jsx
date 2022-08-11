@@ -1,8 +1,9 @@
 import React from 'react';
-// import MyContext from '../Context/context';
+// import MyContext from '../context/Context';
+
 function NavBar() {
-  // const { name } = useContext(MyContext);
-  // console.log(name);
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user);
   return (
     <nav>
       <button
@@ -17,11 +18,11 @@ function NavBar() {
       >
         Meus pedidos
       </button>
-      {/* {name ? (
+      {user ? (
         <h3
-          data-testid="customer_products__element-navbar-user-full-name"
+          data-testid="customer_products__element-navbar-user-full-user"
         >
-          { name }
+          { user.name }
         </h3>
       ) : (
         <h3
@@ -29,15 +30,15 @@ function NavBar() {
         >
           Nome do Usuário
         </h3>
-      )} */}
-      <h3
+      )}
+      {/* <h3
         data-testid="customer_products__element-navbar-user-full-name"
       >
         Nome do Usuário
-      </h3>
+      </h3> */}
       <button
         type="submit"
-        data-testid="1customer_products__element-navbar-link-logout"
+        data-testid="customer_products__element-navbar-link-logout"
       >
         Sair
       </button>
