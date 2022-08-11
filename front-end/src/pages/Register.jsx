@@ -10,7 +10,7 @@ function Register() {
   const [invalidProperties, setInvalidProperties] = useState(false);
   const [isDisable, setDisable] = useState(false);
   const PASSWORD_MIN_LENGTH = 6;
-  const NAME_MIN_LENGTH = 6;
+  const NAME_MIN_LENGTH = 12;
   const emailRegex = /\S+@\S+\.\S+/;
   const emailValidate = emailRegex.test(email);
   const validateName = name.length >= NAME_MIN_LENGTH;
