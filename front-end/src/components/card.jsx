@@ -7,15 +7,16 @@ function Card(props) {
     image,
     name,
     id,
-    // quantity,
+    quantity,
   } = props;
+
   return (
     <div>
       <h1
         data-testid={ `customer_products__element-card-price-${id}` }
 
       >
-        {price}
+        {price.replace('.', ',')}
 
       </h1>
 
@@ -40,8 +41,9 @@ function Card(props) {
 
       </button>
       <input
-        type="number"
+        type="text"
         data-testid={ `customer_products__input-card-quantity-${id}` }
+        value={ quantity }
       />
       <button
         type="button"
@@ -60,4 +62,5 @@ Card.propTypes = {
   image: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   name: PropTypes.number.isRequired,
+  quantity: PropTypes.number.isRequired,
 };

@@ -1,17 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Card from '../components/card';
 import { requestProducts } from '../utils/requests';
 import NavBar from '../components/navBar';
 import MyContext from '../context/Context';
 
 function Products() {
-  const [products, setProducts] = useState();
-  const { user } = useContext(MyContext);
-  console.log(user);
+  const { products, setProducts } = useContext(MyContext);
+
   const fetchProducts = async () => {
     const productsData = await requestProducts('/products');
     setProducts(productsData);
-    console.log(productsData);
   };
 
   useEffect(() => {
@@ -26,8 +24,9 @@ function Products() {
           key={ product.name }
           id={ index + 1 }
           name={ product.name }
-          image={ product.image }
+          image={ product.urlImage }
           price={ product.price }
+          quantity={ product.quantity ? product.quantity : 0 }
         />
       ))}
 
