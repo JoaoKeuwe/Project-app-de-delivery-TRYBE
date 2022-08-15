@@ -23,10 +23,11 @@ function Login() {
   const handleClick = async (event) => {
     event.preventDefault();
     try {
-      const { token } = await requestLogin('/login', { email, password });
+      const { user, token } = await requestLogin('/login', { email, password });
       setToken(token);
+      user.token = token;
 
-      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
 
       setLoginFailed(false);
 

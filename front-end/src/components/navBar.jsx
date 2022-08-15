@@ -1,9 +1,19 @@
-import React from 'react';
-// import MyContext from '../context/Context';
+import React, { useContext, useEffect } from 'react';
+import MyContext from '../context/Context';
+
+const handleClick = () => {
+  localStorage.removeItem('user');
+
+  window.location.href = '/login';
+};
 
 function NavBar() {
-  const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user);
+  const { user, setUser } = useContext(MyContext);
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('user')));
+  }, [setUser]);
+
   return (
     <nav>
       <button
@@ -20,25 +30,17 @@ function NavBar() {
       </button>
       {user ? (
         <h3
-          data-testid="customer_products__element-navbar-user-full-user"
+          data-testid="customer_products__element-navbar-user-full-name"
         >
           { user.name }
         </h3>
       ) : (
-        <h3
-          data-testid="customer_products__element-navbar-user-full-name"
-        >
-          Nome do Usuário
-        </h3>
+        null
       )}
-      {/* <h3
-        data-testid="customer_products__element-navbar-user-full-name"
-      >
-        Nome do Usuário
-      </h3> */}
       <button
         type="submit"
         data-testid="customer_products__element-navbar-link-logout"
+        onClick={ handleClick }
       >
         Sair
       </button>
