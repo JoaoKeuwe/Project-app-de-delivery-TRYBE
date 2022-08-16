@@ -4,6 +4,7 @@ import NavBar from '../components/navBar';
 function Checkout() {
   const productsMock = [
     {
+      id: 1,
       item: 1,
       descrição: 'Brahma 600ml',
       quantidade: 2,
@@ -11,6 +12,7 @@ function Checkout() {
       subTotal: 15.00,
     },
     {
+      id: 2,
       item: 2,
       descrição: 'Skol 269ml',
       quantidade: 2,
@@ -18,6 +20,7 @@ function Checkout() {
       subTotal: 4.38,
     },
     {
+      id: 3,
       item: 3,
       descrição: 'Skol Beats Senses 313ml',
       quantidade: 2,
@@ -47,8 +50,8 @@ function Checkout() {
     // },
   ];
   const [fakeCar, setFakeCar] = useState(productsMock);
+  const [filteredCar, setFilteredCar] = useState();
   console.log(setFakeCar);
-
   useEffect(() => {
     // SUBSTITUIR ESSA PARTE PELO LOCALSTORAGE QUE FOI CRIADO NA PAGINA DE PRODUTOS
     // TROCAR O SETITEM POR GETITEM
@@ -58,7 +61,9 @@ function Checkout() {
 
   // IMPLEMENTAR A LÓGICA DE REMOVER O PRODUTO
   const handleRemoveButton = ({ target }) => {
-    console.log(target);
+    const filteredProducts = fakeCar.filter((item) => item.id !== target.id);
+    setFilteredCar(filteredProducts);
+    console.log(filteredCar);
   };
 
   // LÓGICA DE CALCULAR O VALOR TOTAL DA COMPRA IMPLEMENTADA
@@ -83,7 +88,7 @@ function Checkout() {
         <tbody>
           {
             fakeCar.map((product, index) => (
-              <tr key={ index }>
+              <tr key={ index } id={ index + 1 }>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-item-number-${index}`
@@ -126,6 +131,7 @@ function Checkout() {
                       `customer_checkout__element-order-table-remove-${index}`
                     }
                     onClick={ handleRemoveButton }
+                    id={ index + 1 }
                   >
                     Remover
                   </button>
