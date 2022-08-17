@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../components/navBar';
+import Forms from '../components/formsCheckout';
 
 function Checkout() {
   const productsMock = [
@@ -71,6 +72,7 @@ function Checkout() {
   const totalPrice = fakeCar.reduce((prev, curr) => prev + curr.subTotal, 0);
   console.log(totalPrice);
   return (
+
     <section>
       <NavBar />
       <h2>Finalizar Pedido</h2>
@@ -149,6 +151,7 @@ function Checkout() {
         }
 
       </h3>
+      <Forms />
     </section>
   );
 }
