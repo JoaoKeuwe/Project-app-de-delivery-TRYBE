@@ -6,6 +6,7 @@ function Provider({ children }) {
   const [name, setName] = useState('');
   const [user, setUser] = useState('');
   const [products, setProducts] = useState();
+  const [cart, setCart] = useState([]);
 
   const context = useMemo(() => ({
     name,
@@ -14,7 +15,9 @@ function Provider({ children }) {
     setUser,
     products,
     setProducts,
-  }), [name, user, products]);
+    cart,
+    setCart,
+  }), [name, user, products, cart]);
   return (
     <MyContext.Provider value={ context }>
       { children }
