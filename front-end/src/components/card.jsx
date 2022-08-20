@@ -1,14 +1,79 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import MyContext from '../context/Context';
 
-function Card(props) {
-  const {
-    price,
-    image,
-    name,
-    id,
-    quantity,
-  } = props;
+function Card({ product: { name, price, id, urlImage } }) {
+  const { cart, setCart } = useContext(MyContext);
+  const [qty, setQuantity] = useState(0);
+  const [product, setProduct] = useState(0);
+
+  useEffect(() => {
+    const cartProd = cart.find((item) => item.id === id);
+    setProduct(cartProd);
+    if (cartProd) {
+      setQuantity(cartProd.qtd);
+    }
+  }, [cart]);
+
+  console.log(cart);
+  const handleAdd = () => {
+    if (!product) {
+      setCart((prevState) => [...prevState, {
+        name,
+        price,
+        id,
+        qtd: 1,
+        totalPrice: Number(price),
+      }]);
+    } else {
+      const newCart = cart.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            qtd: product.qtd + 1,
+            totalPrice: item.totalPrice + Number(price),
+          };
+        }
+        return item;
+      });
+      setCart(newCart);
+    }
+    setQuantity((prevState) => prevState + 1);
+    // console.log(cart);
+  };
+
+  const handleRemove = () => {
+    if (product && product.qtd === 1) {
+      setCart(cart.filter((item) => item.id !== id));
+    } else {
+      const newCart = cart.map((item) => {
+        if (item.id === product.id) {
+          return {
+            ...item,
+            qtd: product.qtd - 1,
+            totalPrice: item.totalPrice - Number(price),
+          };
+        }
+        return item;
+      });
+      setCart(newCart);
+    }
+    if (qty > 0) setQuantity((prevState) => prevState - 1);
+    // console.log(cart);
+  };
+
+  const handleQuantity = ({ target: { value } }) => {
+    if (Number(value) >= 0) setQuantity(Number(value));
+    if (!product && Number(value) !== 0) {
+      setCart((prevState) => [...prevState, {
+        name,
+        price,
+        id,
+        qtd: Number(value),
+        totalPrice: Number(value) * Number(price),
+      }]);
+    }
+  };
 
   return (
     <div>
@@ -21,7 +86,7 @@ function Card(props) {
       </h1>
 
       <img
-        src={ image }
+        src={ urlImage }
         alt="imagem"
         data-testid={ `customer_products__img-card-bg-image-${id}` }
       />
@@ -36,6 +101,7 @@ function Card(props) {
       <button
         type="button"
         data-testid={ `customer_products__button-card-rm-item-${id}` }
+        onClick={ handleRemove }
       >
         -
 
@@ -43,11 +109,13 @@ function Card(props) {
       <input
         type="text"
         data-testid={ `customer_products__input-card-quantity-${id}` }
-        value={ quantity }
+        onChange={ handleQuantity }
+        value={ qty }
       />
       <button
         type="button"
         data-testid={ `customer_products__button-card-add-item-${id}` }
+        onClick={ handleAdd }
       >
         +
 
@@ -58,9 +126,5 @@ function Card(props) {
 export default Card;
 
 Card.propTypes = {
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  name: PropTypes.number.isRequired,
-  quantity: PropTypes.number.isRequired,
-};
+  product: PropTypes.obj,
+}.isRequired;
