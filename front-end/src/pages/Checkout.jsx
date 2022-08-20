@@ -1,76 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import NavBar from '../components/navBar';
 import Forms from '../components/formsCheckout';
 
+import MyContext from '../context/Context';
+
 function Checkout() {
-  const productsMock = [
-    {
-      id: 1,
-      item: 1,
-      descrição: 'Brahma 600ml',
-      quantidade: 2,
-      valorUnitário: '7,50',
-      subTotal: 15.00,
-    },
-    {
-      id: 2,
-      item: 2,
-      descrição: 'Skol 269ml',
-      quantidade: 2,
-      valorUnitário: '2,19',
-      subTotal: 4.38,
-    },
-    {
-      id: 3,
-      item: 3,
-      descrição: 'Skol Beats Senses 313ml',
-      quantidade: 2,
-      valorUnitário: '4,49',
-      subTotal: 8.98,
-    },
-    // {
-    //   item: 4,
-    //   descrição: 'Becks 330ml',
-    //   quantidade: 2,
-    //   valorUnitário: '4,99',
-    //   subTotal: 9.98,
-    // },
-    // {
-    //   item: 5,
-    //   descrição: 'Becks 600ml',
-    //   quantidade: 3,
-    //   valorUnitário: '8,89',
-    //   subTotal: 26.67,
-    // },
-    // {
-    //   item: 6,
-    //   descrição: 'Skol Beats Senses 269ml',
-    //   quantidade: 1,
-    //   valorUnitário: '3,57',
-    //   subTotal: 3.57,
-    // },
-  ];
-  const [fakeCar, setFakeCar] = useState(productsMock);
-  const [filteredCar, setFilteredCar] = useState();
-  console.log(setFakeCar);
+  const { cart, setCart } = useContext(MyContext);
+  // const totalPrice = 10;
   useEffect(() => {
     // SUBSTITUIR ESSA PARTE PELO LOCALSTORAGE QUE FOI CRIADO NA PAGINA DE PRODUTOS
     // TROCAR O SETITEM POR GETITEM
-    localStorage.setItem('carrinhofake', JSON.stringify(fakeCar));
-    console.log(fakeCar);
+
   }, []);
 
   // IMPLEMENTAR A LÓGICA DE REMOVER O PRODUTO
   const handleRemoveButton = ({ target }) => {
-    const filteredProducts = fakeCar.filter((item) => item.id !== target.id);
-    setFilteredCar(filteredProducts);
-    console.log(filteredCar);
+    setCart((prevState) => prevState
+      .filter((item) => item.name !== cart[target.id].name));
+    console.log(target.id);
+    console.log(cart[target.id]);
   };
 
   // LÓGICA DE CALCULAR O VALOR TOTAL DA COMPRA IMPLEMENTADA
   // FAZER AJUSTE DEPENDENDO DO RETORNO DO LOCALSTORAGE
-  const totalPrice = fakeCar.reduce((prev, curr) => prev + curr.subTotal, 0);
-  console.log(totalPrice);
+  const totalPrice = cart.reduce((prev, curr) => prev + curr.totalPrice, 0);
+  // console.log(totalPrice);
   return (
 
     <section>
@@ -89,42 +43,42 @@ function Checkout() {
         </thead>
         <tbody>
           {
-            fakeCar.map((product, index) => (
-              <tr key={ index } id={ index + 1 }>
+            cart.map((product, index) => (
+              <tr key={ product.id } id={ product.id }>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-item-number-${index}`
                   }
                 >
-                  {product.item}
+                  {index + 1}
                 </td>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-name-${index}`
                   }
                 >
-                  {product.descrição}
+                  {product.name}
                 </td>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-quantity-${index}`
                   }
                 >
-                  {product.quantidade}
+                  {product.qtd}
                 </td>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-unit-price-${index}`
                   }
                 >
-                  {product.valorUnitário}
+                  {product.price.replace('.', ',')}
                 </td>
                 <td
                   data-testid={
                     `customer_checkout__element-order-table-sub-total-${index}`
                   }
                 >
-                  {product.subTotal}
+                  { Math.abs(product.totalPrice).toFixed(2).toString().replace('.', ',')}
                 </td>
                 <td>
                   <button
@@ -133,7 +87,7 @@ function Checkout() {
                       `customer_checkout__element-order-table-remove-${index}`
                     }
                     onClick={ handleRemoveButton }
-                    id={ index + 1 }
+                    id={ index }
                   >
                     Remover
                   </button>
@@ -147,7 +101,7 @@ function Checkout() {
         data-testid="customer_checkout__element-order-total-price"
       >
         {
-          `Total: ${totalPrice} R$`
+          `Total: ${Math.abs(totalPrice).toFixed(2).toString().replace('.', ',')} R$`
         }
 
       </h3>
