@@ -5,10 +5,12 @@ module.exports = {
       sale_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        primaryKey: true,
         refereces: { model: 'Sales', key: 'id' }
       },
       product_id: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
         refereces: { model: 'Products', key: 'id' }
       },
       quantity: {
