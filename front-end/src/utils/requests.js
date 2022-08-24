@@ -18,4 +18,11 @@ export const requestProducts = async (endpoint) => {
   return data;
 };
 
+export const createSale = async (endpoint, body, token) => {
+  const { data } = await api.post(endpoint, body, {
+    headers: { Authorization: token },
+  });
+  return data;
+};
+
 export default api;

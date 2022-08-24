@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-// const mid = require('../middlewares/errors');
+const mid = require('./middlewares/errors');
 const {
   getSales,
   createSale,
@@ -12,8 +12,8 @@ const {
 
 router
   .get('/', getSales)
-  .post('/', createSale)
-  .post('/products', createSaleProducts)
+  .post('/', mid.tokenAuthenticador, createSale)
+  .post('/products', mid.tokenAuthenticador, createSaleProducts)
   .get('/products', getSalesProducts);
 
 module.exports = router;
