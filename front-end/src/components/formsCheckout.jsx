@@ -79,7 +79,7 @@ function Forms(props) {
 
 Forms.propTypes = {
   total: PropTypes.string.isRequired,
-  cart: PropTypesshape({
+  cart: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
     price: PropTypes.string,
