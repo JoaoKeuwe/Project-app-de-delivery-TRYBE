@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     deliveryAddress: DataTypes.STRING,
     deliveryNumber: DataTypes.STRING,
     saleDate: DataTypes.DATE,
+    status: DataTypes.STRING,
   }, {
     sequelize,
     underscored: true,

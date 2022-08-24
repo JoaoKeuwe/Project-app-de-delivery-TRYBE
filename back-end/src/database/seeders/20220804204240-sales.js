@@ -9,6 +9,7 @@ module.exports = {
       delivery_address: 'rua carapibas',
       delivery_number: '4002-8922',
       sale_date: '21/10/15',
+      status: 'Pendente'
      }], {});
   },
 

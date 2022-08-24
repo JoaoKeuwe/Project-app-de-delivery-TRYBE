@@ -15,6 +15,7 @@ function Products() {
   };
 
   const handleCheckout = () => {
+    localStorage.setItem('cartProducts', JSON.stringify(cart));
     navigate('/customer/checkout');
   };
 

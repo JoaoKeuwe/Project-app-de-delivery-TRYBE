@@ -10,15 +10,16 @@ function Checkout() {
   useEffect(() => {
     // SUBSTITUIR ESSA PARTE PELO LOCALSTORAGE QUE FOI CRIADO NA PAGINA DE PRODUTOS
     // TROCAR O SETITEM POR GETITEM
-
+    const cartProducts = JSON.parse(localStorage.getItem('cartProducts'));
+    if (cartProducts) {
+      setCart(cartProducts);
+    }
   }, []);
 
   // IMPLEMENTAR A LÓGICA DE REMOVER O PRODUTO
   const handleRemoveButton = ({ target }) => {
     setCart((prevState) => prevState
       .filter((item) => item.name !== cart[target.id].name));
-    console.log(target.id);
-    console.log(cart[target.id]);
   };
 
   // LÓGICA DE CALCULAR O VALOR TOTAL DA COMPRA IMPLEMENTADA
@@ -105,7 +106,7 @@ function Checkout() {
         }
 
       </h3>
-      <Forms />
+      <Forms total={ totalPrice } cart={ cart } />
     </section>
   );
 }

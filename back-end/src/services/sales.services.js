@@ -25,6 +25,7 @@ const createSale = async (sale) => {
     deliveryAddress,
     deliveryNumber,
     saleDate: new Date(),
+    status: 'Pendente',
    });
 
   return sales;
