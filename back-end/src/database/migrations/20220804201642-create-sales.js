@@ -17,7 +17,7 @@ module.exports = {
         refereces: { model: 'Users', key: 'id' }
       },
       total_price: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10, 2)
       },
       delivery_address: {
         type: Sequelize.STRING

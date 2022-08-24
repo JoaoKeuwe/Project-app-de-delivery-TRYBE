@@ -9,28 +9,28 @@ function Forms(props) {
   const navigate = useNavigate();
   const [adress, setAdress] = useState('');
   const [number, setNumber] = useState('');
-  const [sellerId, setSeller] = useState('');
 
   const user = JSON.parse(localStorage.getItem('user'));
   const handleSubmit = async () => {
+    const select = document.getElementById('vendedor');
+    const { value } = select.options[select.selectedIndex];
+
     const data = {
       userId: user.id,
-      sellerId: Number(sellerId),
+      sellerId: Number(value),
       totalPrice: total,
       deliveryAddress: adress,
       deliveryNumber: number,
     };
-    console.log(user.token);
+
     const sale = await createSale('/sales', data, user.token);
 
     cart.forEach((e) => {
       e.saleId = sale.id;
     });
-    console.log(cart);
 
     await createSale('/sales/products', cart, user.token);
 
-    console.log(sale);
     navigate(`/customer/orders/${sale.id}`);
   };
   return (
@@ -42,11 +42,11 @@ function Forms(props) {
             name="vendedor"
             id="vendedor"
             data-testid="customer_checkout__select-seller"
-            onClick={ (e) => setSeller(e.target.value) }
+            onClick={ (e) => console.log(e.target.value) }
           >
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
+            <option value="1">victor</option>
+            <option value="2">joão</option>
+            <option value="3">itaji</option>
           </select>
         </label>
         <label htmlFor="endereço">
@@ -79,7 +79,7 @@ function Forms(props) {
 
 Forms.propTypes = {
   total: PropTypes.string.isRequired,
-  cart: PropTypes.shape({
+  cart: PropTypes.arrayOf({
     id: PropTypes.number,
     name: PropTypes.string,
     price: PropTypes.string,
