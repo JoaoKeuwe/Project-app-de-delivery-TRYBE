@@ -43,10 +43,12 @@ function Forms(props) {
             id="vendedor"
             data-testid="customer_checkout__select-seller"
             onClick={ (e) => console.log(e.target.value) }
+            value="Fulana Pereira"
           >
-            <option value="1">victor</option>
+            <option> Fulana Pereira </option>
+            {/* <option value="1">victor</option>
             <option value="2">joão</option>
-            <option value="3">itaji</option>
+            <option value="3">itaji</option> */}
           </select>
         </label>
         <label htmlFor="endereço">
